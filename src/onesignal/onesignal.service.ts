@@ -30,6 +30,24 @@ export class OnesignalService {
     }
   }
 
+
+  async getViewNotifications() {
+    try {
+      return await this.oneSignalService
+        .viewNotifications({ kind: null, limit: 100, offset: 0 })
+        .then((res) => {
+          console.log('SUCCESS GET NOTIFICATION', res);
+          return res;
+        })
+        .catch((e) => {
+          throw e;
+        });
+    } catch (error) {
+      console.log('ERROR VIEW ONS APPS', error);
+      throw error;
+    }
+  }
+
   async getViewDevices() {
     try {
       return await this.oneSignalService

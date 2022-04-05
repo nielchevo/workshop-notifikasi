@@ -18,4 +18,9 @@ export class AppController {
   getOneSignalDevices() {
     return this.oneSignalService.getViewDevices();
   }
+
+  @Get('notifications')
+  getOneSignalNotifications() {
+    return this.oneSignalService.getViewNotifications();
+  }
 }
