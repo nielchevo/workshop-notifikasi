@@ -29,4 +29,22 @@ export class OnesignalService {
       throw error;
     }
   }
+
+  async getViewDevices() {
+    try {
+      return await this.oneSignalService
+        .viewDevices()
+        .then((res) => {
+          console.log('SUCCESS GET DEVICES', res);
+          return res;
+        })
+        .catch((e) => {
+          console.error('ERROR GET DEVICES', e);
+          throw e;
+        });
+    } catch (error) {
+      console.error('ERROR VIEW ONS DEVICES', error);
+      throw error;
+    }
+  }
 }
