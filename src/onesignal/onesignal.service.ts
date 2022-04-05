@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { OneSignalService } from 'onesignal-api-client-nest';
-import { NotificationBySegmentBuilder } from 'onesignal-api-client-core';
+import { INotification, NotificationBuilder, NotificationBySegmentBuilder, INotificationFilterUsers } from 'onesignal-api-client-core';
 
 @Injectable()
 export class OnesignalService {
@@ -30,6 +30,43 @@ export class OnesignalService {
     }
   }
 
+  async createWebNotification(message: string) {
+    try {
+      // const notifOption: INotification = {
+      //   isAnyWeb: true,
+      //   filters: {
+      //     country: 'ID',
+      //   },
+      //   included_segments: ['Active Users'],
+      // };
+
+      // const builder = new NotificationBuilder(notifOption)
+      //   .setContents({ en: 'ini konten buat web notification' })
+      //   .build();
+
+      const builder = new NotificationBySegmentBuilder()
+        .setIncludedSegments(['Active Users'])
+        .notification()
+        .setContents({
+          message: 'content message for web notification',
+          header: 'header test',
+        })
+        .build();
+
+      return await this.oneSignalService
+        .createNotification(builder)
+        .then((res) => {
+          console.log('SUCCESS CREATE WEB NOTIFICATION: ', res);
+          return res;
+        })
+        .catch((e) => {
+          throw e;
+        });
+    } catch (error) {
+      console.error('ERROR CREATE WEB NOTIFICATION', error);
+      throw error;
+    }
+  }
 
   async getViewNotifications() {
     try {
