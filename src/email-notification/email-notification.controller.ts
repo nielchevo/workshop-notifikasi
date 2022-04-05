@@ -18,6 +18,7 @@ export class EmailNotificationController {
       return result;
     } catch (error) {
       console.error('ERROR', error);
+      throw error;
     }
   }
 }

@@ -1,10 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { OneSignalService } from 'onesignal-api-client-nest';
-import { INotification, NotificationBuilder, NotificationBySegmentBuilder, INotificationFilterUsers } from 'onesignal-api-client-core';
+import {
+  INotification,
+  NotificationBuilder,
+  NotificationBySegmentBuilder,
+  INotificationFilterUsers,
+  ICreateDeviceInput,
+} from 'onesignal-api-client-core';
 
 @Injectable()
 export class OnesignalService {
   constructor(private readonly oneSignalService: OneSignalService) {}
+
+  async createNewDeviceSubscriber(payload: ICreateDeviceInput) {
+    try {
+      const data = { ...payload };
+
+      return await this.oneSignalService
+        .createDevice(data)
+        .then((res) => {
+          console.log('SUCCESS CREATE NEW DEVICE SUBSCRIBE', res);
+          return res;
+        })
+        .catch((e) => {
+          throw e;
+        });
+    } catch (error) {
+      console.error('ERROR CREATE NEW DEVICE SUBSCIBER', error);
+      throw error;
+    }
+  }
 
   async createNotificationBySegment(message: string) {
     try {
