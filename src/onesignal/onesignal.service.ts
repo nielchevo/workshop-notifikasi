@@ -34,22 +34,20 @@ export class OnesignalService {
     try {
       // const notifOption: INotification = {
       //   isAnyWeb: true,
-      //   filters: {
-      //     country: 'ID',
+      //   filters: [{}],
+      //   contents: {
+      //     en: 'Ini KOnten Buat web notification',
       //   },
       //   included_segments: ['Active Users'],
+      //   excluded_segments: [''],
       // };
-
-      // const builder = new NotificationBuilder(notifOption)
-      //   .setContents({ en: 'ini konten buat web notification' })
-      //   .build();
+      // const builder = new NotificationBuilder(notifOption).build();
 
       const builder = new NotificationBySegmentBuilder()
         .setIncludedSegments(['Active Users'])
         .notification()
         .setContents({
-          message: 'content message for web notification',
-          header: 'header test',
+          en: message ? message : 'default message',
         })
         .build();
 
